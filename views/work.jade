@@ -1,0 +1,59 @@
+extends layout
+
+block activeMenu
+  -var selected = 'Work';
+
+mixin displayList(array)
+  each work, i in array
+    li.worklist-li
+      .workimage-container
+        img(src=work.image,  class="workimage")
+      .work-top-part
+        .workdescription-container
+          h1 #{work.name}
+          h3 #{work.subtitle}
+          p #{work.description}
+
+        .worklink-container
+          ul
+            if(work.youtube && work.youtube !== "")
+              li
+                a(href=work.youtube, title=work.youtube)
+                  img(src="http://vstuder.com/images/youtubeplay.png")
+            if(work.github && work.github != "")
+              li
+                a(href=work.github, title=work.github)
+                  img(src="http://vstuder.com/images/logogithub.png")
+            if(work.website && work.website != "")
+              li
+                a(href=work.website, title=work.website)
+                  img(src="http://vstuder.com/images/hyperlink.png")
+            if(work.binary && work.binary != "")
+              li
+                a(href=work.binary, title=work.binary)
+                  img(src="http://vstuder.com/images/winbinary.png")
+
+      .work-bot-part
+        .worklocation-container
+          -var loctext =  "Made at " + work.location + " in " + work.year;
+          a(href=work.locationurl, title=work.locationurl)= loctext
+        .tag-container
+          ul.tag-ul
+            each tag, i in work.tags
+              li.tag-li 
+                div #{tag}
+
+mixin displaySeparator(name)
+  div.separator
+    img(src="http://vstuder.com/images/#{name}.png")
+    h1 #{name}
+
+block append content
+  div#worklist
+    ul.worklist-ul
+      +displaySeparator("Embedded Systems")
+      +displayList(robotlist)
+      +displaySeparator("Games")
+      +displayList(gamelist)
+      +displaySeparator("Video Editing")
+      +displayList(videolist)

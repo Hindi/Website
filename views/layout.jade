@@ -1,0 +1,31 @@
+doctype html
+html
+  head
+    block head
+      title #{title}
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+      link(rel="stylesheet", href="stylesheets/navbar.css")
+      link(rel="stylesheet", href="stylesheets/content.css")
+
+  block activeMenu
+    -var selected = 'Home'; //default
+  -var menu = { 'Home': '/', 'Work' : '/work', 'Tower War': '/towerwar' };
+
+  body
+    block navbar
+      #navbar
+        ul
+          each val, key in menu
+            if selected === key
+              li(class = 'active')
+                a(href=val, title=key)= key
+            else
+              li
+                if key === 'Tower War'
+                  a(href=val, title=key, class='last')= key
+                else
+                  a(href=val, title=key)= key
+
+    block content
+
+    block footer
